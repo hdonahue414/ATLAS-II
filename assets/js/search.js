@@ -25,22 +25,35 @@ function buildSearchIndex(){
   });
   SEARCH_INDEX=items;
 }
-function matchPreview(text,term){
-  let clean=String(text).replace(/\s+/g,' ').trim(),idx=clean.toLowerCase().indexOf(term.toLowerCase());
-  if(idx<0)return clean.slice(0,160);
-  let start=Math.max(0,idx-55),end=Math.min(clean.length,idx+term.length+85);
+function searchTerms(query){return [...new Set(query.toLowerCase().split(/\s+/).filter(Boolean))]}
+function findTermMatch(clean,terms){
+  let hay=clean.toLowerCase(),best=null;
+  terms.forEach(term=>{let idx=hay.indexOf(term);if(idx>=0&&(!best||idx<best.idx))best={idx,term}});
+  return best;
+}
+function matchPreview(text,terms){
+  let clean=String(text).replace(/\s+/g,' ').trim(),match=findTermMatch(clean,terms);
+  if(!match)return clean.slice(0,165);
+  let start=Math.max(0,match.idx-58),end=Math.min(clean.length,match.idx+match.term.length+92);
   return (start?'...':'')+clean.slice(start,end)+(end<clean.length?'...':'');
 }
+function highlightText(text,terms){
+  let value=String(text??'');if(!terms.length)return esc(value);
+  let re=new RegExp(`(${terms.map(t=>t.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('|')})`,'ig');
+  return value.split(re).map(part=>terms.includes(part.toLowerCase())?`<mark>${esc(part)}</mark>`:esc(part)).join('');
+}
+function titleCase(text){return String(text).replaceAll('/',' / ').split(/\s+/).filter(Boolean).map(w=>w==='/'?w:w[0].toUpperCase()+w.slice(1).toLowerCase()).join(' ')}
+function searchActionLabel(result){return `Open ${result.section==='School'?result.school:titleCase(result.section.replace('LGBTQ/community resources','Community Resources'))}`}
 function runGlobalSearch(query){
   let box=document.getElementById('searchResults');if(!box)return;
   let q=query.trim();if(q.length<2){box.style.display='none';box.innerHTML='';return}
-  let terms=q.toLowerCase().split(/\s+/).filter(Boolean);
+  let terms=searchTerms(q);
   let results=SEARCH_INDEX.map(item=>{
     let hay=[item.school,item.section,item.text].join(' ').toLowerCase();
     let score=terms.reduce((n,t)=>n+(hay.includes(t)?1:0),0);
     return score?{...item,score}:null;
   }).filter(Boolean).sort((a,b)=>b.score-a.score||a.school.localeCompare(b.school)).slice(0,18);
-  box.innerHTML=results.length?results.map((r,i)=>`<button class="searchResult" onclick="openSearchResult(${i})" data-search-result="${i}"><div class="searchMeta">${esc(r.school)} / ${esc(r.section)}</div><div>${esc(matchPreview(r.text,q))}</div><div class="searchPreview">Open ${esc(NAV.find(x=>x[0]===r.view)?.[2]||r.view)}</div></button>`).join(''):'<div class="searchResult"><div class="searchMeta">No matches</div><div class="searchPreview">Try a school, city, resource, evidence note, or ecosystem term.</div></div>';
+  box.innerHTML=results.length?results.map((r,i)=>`<button class="searchResult" onclick="openSearchResult(${i})" data-search-result="${i}"><div class="searchMeta">${highlightText(r.school,terms)} / ${highlightText(r.section,terms)}</div><div class="searchSnippet">${highlightText(matchPreview(r.text,terms),terms)}</div><div class="searchPreview">${highlightText(searchActionLabel(r),terms)}</div></button>`).join(''):'<div class="searchResult"><div class="searchMeta">No matches</div><div class="searchPreview">Try a school, city, resource, evidence note, or ecosystem term.</div></div>';
   box._results=results;box.style.display='block';
 }
 function openSearchResult(index){
