@@ -3,7 +3,7 @@
     "title": "MFA Documentary Film Scoring Model",
     "version": "23.0-decision-visual",
     "purpose": "Evidence-weighted documentary MFA fit and sustainability analysis.",
-    "last_updated": "2026-05-13",
+    "last_updated": "2026-05-14",
     "notes": [
       "Pamunkey documentary is tagged exploratory/non-core and should not drive portfolio fit scoring.",
       "Static HTML cannot autonomously scrape the live web. Web-linked updating requires API/serverless/Sheets/backend integration.",
@@ -2191,7 +2191,123 @@
         "Krankies",
         "Innovation Quarter"
       ],
-      "_searchIndex": 0
+      "_searchIndex": 0,
+      "city_life": {
+        "environmental_anchors": [
+          {
+            "name": "a/perture cinema",
+            "type": "participatory_culture_anchor",
+            "anchor_type": "participatory_culture_anchor",
+            "district": "Downtown",
+            "relevance_note": "Local arthouse screening infrastructure with direct relevance to film rhythm and shared cultural life.",
+            "website_url": "https://aperturecinema.com/",
+            "instagram_url": "https://www.instagram.com/aperturecinema",
+            "sensory_tags": [
+              "cinema dark",
+              "small screening rooms",
+              "downtown night texture"
+            ],
+            "social_tags": [
+              "film audience",
+              "date-night viability",
+              "local cinephile life"
+            ]
+          },
+          {
+            "name": "Krankies",
+            "type": "third_place_anchor",
+            "anchor_type": "third_place_anchor",
+            "district": "Downtown",
+            "relevance_note": "Coffee and event infrastructure that can function as a recurring local-culture touchpoint.",
+            "website_url": "https://krankiescoffee.com/",
+            "instagram_url": "https://www.instagram.com/krankiescoffee",
+            "sensory_tags": [
+              "industrial texture",
+              "cafe noise",
+              "evening activity"
+            ],
+            "social_tags": [
+              "artists",
+              "students",
+              "informal gathering"
+            ]
+          },
+          {
+            "name": "Camino Bakery",
+            "type": "third_place_anchor",
+            "anchor_type": "third_place_anchor",
+            "district": "Downtown",
+            "relevance_note": "A plausible repeatable writing/reading/coffee anchor rather than a one-off attraction.",
+            "website_url": "https://caminobakery.com/",
+            "instagram_url": "https://www.instagram.com/caminobakery",
+            "sensory_tags": [
+              "warm interior",
+              "coffee rhythm",
+              "downtown foot traffic"
+            ],
+            "social_tags": [
+              "casual work sessions",
+              "low-pressure public life"
+            ]
+          },
+          {
+            "name": "North Star LGBTQ+ Community Center",
+            "type": "queer_community_anchor",
+            "anchor_type": "queer_community_anchor",
+            "district": "Winston-Salem",
+            "relevance_note": "Direct community infrastructure signal; important as a stabilizer, not a total safety guarantee.",
+            "website_url": "https://www.northstarwsnc.org/",
+            "instagram_url": "https://www.instagram.com/northstarlgbtq",
+            "sensory_tags": [
+              "community-center scale",
+              "resource-oriented"
+            ],
+            "social_tags": [
+              "queer infrastructure",
+              "mutual support",
+              "local belonging"
+            ]
+          },
+          {
+            "name": "Sawtooth School for Visual Art",
+            "type": "arts_culture_anchor",
+            "anchor_type": "arts_culture_anchor",
+            "district": "Downtown / Arts District",
+            "relevance_note": "Hands-on arts infrastructure that broadens creative life beyond the MFA program itself.",
+            "website_url": "https://www.sawtooth.org/",
+            "instagram_url": "https://www.instagram.com/sawtoothschool",
+            "sensory_tags": [
+              "studio texture",
+              "materials",
+              "workshop pace"
+            ],
+            "social_tags": [
+              "local artists",
+              "classes",
+              "participatory making"
+            ]
+          },
+          {
+            "name": "RiverRun International Film Festival",
+            "type": "documentary_world_node",
+            "anchor_type": "documentary_world_node",
+            "district": "Winston-Salem",
+            "relevance_note": "Local documentary-world node that may matter for screenings, proximity, and regional nonfiction culture without becoming a prestige proxy.",
+            "website_url": "https://riverrunfilm.com/",
+            "instagram_url": "https://www.instagram.com/riverrunfilm",
+            "sensory_tags": [
+              "festival rhythm",
+              "screenings",
+              "downtown circulation"
+            ],
+            "social_tags": [
+              "documentary audience",
+              "regional film network",
+              "visiting filmmakers"
+            ]
+          }
+        ]
+      }
     },
     {
       "name": "Stanford",
