@@ -119,3 +119,8 @@ function initSearch(){
   input.onkeydown=e=>{if(e.key==='Escape'){let box=document.getElementById('searchResults');box.style.display='none';box.innerHTML='';input.value=''}};
 }
 document.addEventListener('click',e=>{let box=document.getElementById('searchResults');if(box&&!e.target.closest('.searchBox'))box.style.display='none'});
+function researchImage(s){
+  let name=String(s?.name||'');
+  let map=[[/wake forest/i,'assets/cities/brookstown.png'],[/stanford/i,'assets/cities/stanford.png'],[/depaul/i,'assets/cities/depaul.png'],[/northwestern/i,'assets/cities/northwestern.png'],[/buffalo/i,'assets/cities/ub.png'],[/ucsc|santa cruz/i,'assets/cities/ucsc.png'],[/ohio/i,'assets/cities/ohiou.png'],[/syracuse/i,'assets/cities/syracuseu.png'],[/temple/i,'assets/cities/temple.png']];
+  return (map.find(([re])=>re.test(name))||[])[1]||s?.visual_identity?.photo_local||'';
+}
