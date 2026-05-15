@@ -324,6 +324,12 @@ Images should support atmosphere and recognition, not become tourism galleries. 
 
 Future synthesis should produce short, human-readable environmental reads. Avoid placeholder shorthand, score-speak, and generic optimization language.
 
+### Reverted Runtime Attempt
+
+A first runtime Environment tab implementation was attempted and reverted because it assembled raw City/Life/editor fragments rather than producing an authored viewer-facing surface.
+
+Future Environment work must be designed as a coherent page system, not composed from exposed internal modules. Viewer-facing surfaces should translate ontology, editor state, and model categories into human environmental interpretation rather than exposing internal category language directly.
+
 ## Implementation Principle
 
 The next implementation phase should replace fragmentation with coherence gradually:
