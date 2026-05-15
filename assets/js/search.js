@@ -44,6 +44,52 @@ function highlightText(text,terms){
 }
 function titleCase(text){return String(text).replaceAll('/',' / ').split(/\s+/).filter(Boolean).map(w=>w==='/'?w:w[0].toUpperCase()+w.slice(1).toLowerCase()).join(' ')}
 function searchActionLabel(result){return `Open ${result.section==='School'?result.school:titleCase(result.section.replace('LGBTQ/community resources','Community Resources'))}`}
+function searchSectionLabel(section){
+  let labels={
+    School:'Program record',
+    City:'Environment',
+    Curriculum:'Program structure',
+    'Points of interest':'Environmental anchors',
+    'LGBTQ/community resources':'Community infrastructure',
+    'Documentary ecosystem':'Documentary world',
+    'Alumni outcomes':'Outcomes',
+    'Evidence notes':'Research record'
+  };
+  return labels[section]||titleCase(section);
+}
+function searchFallbackSnippet(result){
+  let fallbacks={
+    School:'School identity matched the query. Open the program record for the full interpretive context.',
+    City:'City and regional context matched the query through the environmental record.',
+    Curriculum:'Program structure matched the query. Open the record for curriculum, mentorship, and fit context.',
+    'Points of interest':'Environmental anchor material matched the query through City & Life records.',
+    'LGBTQ/community resources':'Community infrastructure matched the query through lived-environment records.',
+    'Documentary ecosystem':'Documentary-world context matched the query through professional and regional ecosystem notes.',
+    'Alumni outcomes':'Outcome evidence matched the query through alumni or current-student trajectory records.',
+    'Evidence notes':'Research material matched the query through documented, inferred, or unresolved evidence.'
+  };
+  return fallbacks[result.section]||'ATLAS records matched this query. Open the record for the surrounding context.';
+}
+function cleanSearchSnippet(text){
+  let raw=String(text??'').replace(/[_{}[\]"'`|]/g,' ');
+  raw=raw.replace(/\b(true|false|null|undefined|nan)\b/ig,' ');
+  raw=raw.replace(/\b(active seeded|active_seeded|implemented|pending|enabled|disabled|school specific|school_specific)\b/ig,' ');
+  raw=raw.replace(/\b(confidence|weight|weighted|score|scalar|value|formula|inputs?|outputs?|subvariables?|schema|status|data model|data_model|metadata|source trace|source_trace)\b\s*[:=]?/ig,' ');
+  raw=raw.replace(/\b0?\.\d+\b/g,' ');
+  raw=raw.replace(/\b\d+(?:\.\d+)?%?\b/g,m=>/^\d{4}$/.test(m)?m:' ');
+  raw=raw.replace(/\s*[:=;,]+\s*/g,' ');
+  raw=raw.replace(/\s+/g,' ').trim();
+  let words=raw.split(/\s+/).filter(w=>/[a-z]/i.test(w));
+  if(words.length<6)return '';
+  if(/\b(true|false|null|undefined|confidence|weighted|subvariables|schema|metadata)\b/i.test(raw))return '';
+  return raw;
+}
+function editorialSearchSnippet(result,terms){
+  let cleaned=cleanSearchSnippet(result.text);
+  if(!cleaned)return searchFallbackSnippet(result);
+  let preview=cleanSearchSnippet(matchPreview(cleaned,terms));
+  return preview||searchFallbackSnippet(result);
+}
 function runGlobalSearch(query){
   let box=document.getElementById('searchResults');if(!box)return;
   let q=query.trim();if(q.length<2){box.style.display='none';box.innerHTML='';return}
@@ -53,7 +99,10 @@ function runGlobalSearch(query){
     let score=terms.reduce((n,t)=>n+(hay.includes(t)?1:0),0);
     return score?{...item,score}:null;
   }).filter(Boolean).sort((a,b)=>b.score-a.score||a.school.localeCompare(b.school)).slice(0,18);
-  box.innerHTML=results.length?results.map((r,i)=>`<button class="searchResult" onclick="openSearchResult(${i})" data-search-result="${i}"><div class="searchMeta">${highlightText(r.school,terms)} / ${highlightText(r.section,terms)}</div><div class="searchSnippet">${highlightText(matchPreview(r.text,terms),terms)}</div><div class="searchPreview">${highlightText(searchActionLabel(r),terms)}</div></button>`).join(''):'<div class="searchResult"><div class="searchMeta">No matches</div><div class="searchPreview">Try a school, city, resource, evidence note, or ecosystem term.</div></div>';
+  box.innerHTML=results.length?results.map((r,i)=>{
+    let snippet=editorialSearchSnippet(r,terms);
+    return `<button class="searchResult" onclick="openSearchResult(${i})" data-search-result="${i}"><div class="searchMeta">${highlightText(r.school,terms)} / ${highlightText(searchSectionLabel(r.section),terms)}</div><div class="searchSnippet">${highlightText(snippet,terms)}</div><div class="searchPreview">${highlightText(searchActionLabel(r),terms)}</div></button>`;
+  }).join(''):'<div class="searchResult"><div class="searchMeta">No matches</div><div class="searchSnippet">No archival trace surfaced for this query yet.</div><div class="searchPreview">Try a school, city, evidence note, or environmental anchor.</div></div>';
   box._results=results;box.style.display='block';
 }
 function openSearchResult(index){
