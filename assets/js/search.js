@@ -155,8 +155,11 @@ function researchEvidenceCandidates(s){
 function researchDedupeBlocks(items,limit=5){
   let seen=new Set(),out=[];
   items.forEach(item=>{
-    let text=researchText(item.text),key=text.toLowerCase();
-    if(text&&key&&!seen.has(key)){seen.add(key);out.push({...item,text});}
+    let label=Array.isArray(item)?item[0]:item.label;
+    let text=researchText(Array.isArray(item)?item[1]:item.text);
+    let className=Array.isArray(item)?item[2]:item.className;
+    let key=text.toLowerCase();
+    if(label&&text&&key&&!seen.has(key)){seen.add(key);out.push({label,text,className});}
   });
   return out.slice(0,limit);
 }
