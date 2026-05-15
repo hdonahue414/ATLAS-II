@@ -1,4 +1,0 @@
-GitHub Pages deployment nudge.
-
-Updated: 2026-05-15T07:45:00Z
-Purpose: trigger a fresh Pages deployment after navigation architecture updates.
