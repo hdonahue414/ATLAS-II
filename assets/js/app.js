@@ -7,6 +7,7 @@ function installEnvironmentModalCopy(){window.atlasOpenToriContext=function(i){l
 function environmentRecord(s){return typeof cityLifeRecord==='function'?cityLifeRecord(s):null}
 function environmentAnchors(s){let r=environmentRecord(s);if(!r)return [];return [...(r.neighborhoodAnchors||[]),...(r.thirdPlaceAnchors||[]),...(r.queerAnchors||[]),...(r.artsAnchors||[])].map(a=>a?.name||a).filter(Boolean).slice(0,4)}
 function environmentAuthoredSummary(s){let name=String(s?.name||'');return (ENVIRONMENT_AUTHORED_READS.find(([re])=>re.test(name))||[])[1]||''}
+function installToriAuthoredSummaries(){let base=typeof atlasToriSynthesis==='function'?atlasToriSynthesis:null;if(!base)return;window.atlasToriSynthesis=function(s,r,l){return environmentAuthoredSummary(s)||base(s,r,l)}}
 function environmentReadable(text){let v=String(text||'').replace(/\s+/g,' ').trim();if(!v||v.length<42)return '';if(/Drawn from|_anchor|synthesis|conditions|documentary_world_node|Most inferential|Livability strong locally|strong locally|Major concern|Good support/i.test(v))return '';if(/^(low|high|medium)\s+friction,|^[a-z\s]+,\s*[a-z\s]+,\s*[a-z\s]+/i.test(v))return '';return v}
 function environmentNotes(s,primary){let r=environmentRecord(s),seen=new Set([primary]);return (r?[...(r.livability||[]),...(r.relationship||[])]:[]).map(environmentReadable).filter(v=>v&&!seen.has(v)&&seen.add(v))}
 function environmentSummary(s){let authored=environmentAuthoredSummary(s);if(authored)return authored;let notes=environmentNotes(s,'');if(notes[0])return notes[0];let r=environmentRecord(s),city=r?.city||s.location_intelligence?.city||s.location?.city||'This place';return `${city} remains an open lived-environment read, with daily rhythm, community texture, and recovery anchors still coming into focus.`}
@@ -17,5 +18,6 @@ installEnvironmentLabel();
 installEnvironmentViewer();
 installEnvironmentContextDelegation();
 installEnvironmentModalCopy();
+installToriAuthoredSummaries();
 init();
 installAtlasHomeAndSplashPolish();
