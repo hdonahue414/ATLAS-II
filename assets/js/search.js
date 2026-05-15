@@ -122,57 +122,83 @@ function researchUnique(items,limit=3){
   return items.map(researchText).map(x=>x.replace(/\s+/g,' ').trim()).filter(x=>x&&x!=='[object Object]'&&!seen.has(x.toLowerCase())&&seen.add(x.toLowerCase())).slice(0,limit);
 }
 function focusedResearchStyles(){
-  if(document.getElementById('focusedResearchStylesV3'))return;
-  let style=document.createElement('style');style.id='focusedResearchStylesV3';
-  style.textContent='.researchArchive.focused{display:grid;gap:clamp(24px,5vw,64px)}.researchFeatureStack{display:grid;gap:clamp(48px,8vw,98px)}.researchFeature{position:relative;min-height:clamp(840px,96vh,1080px);border:1px solid rgba(255,255,255,.12);border-radius:34px;overflow:hidden;background:#080d17;box-shadow:0 30px 100px rgba(0,0,0,.38)}.researchFeature img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.82;filter:saturate(.86) contrast(1.05)}.researchFeature:before{content:"";position:absolute;inset:0;z-index:1;background:radial-gradient(circle at 25% 70%,rgba(2,6,14,.88),rgba(2,6,14,.58) 36%,rgba(2,6,14,.18) 68%,transparent),linear-gradient(90deg,rgba(2,6,14,.80),rgba(2,6,14,.40) 43%,rgba(2,6,14,.10) 76%,transparent),linear-gradient(180deg,rgba(2,6,14,.02),rgba(2,6,14,.16) 46%,rgba(2,6,14,.80))}.researchFeature:nth-child(even):before{background:radial-gradient(circle at 76% 72%,rgba(2,6,14,.88),rgba(2,6,14,.58) 36%,rgba(2,6,14,.18) 68%,transparent),linear-gradient(270deg,rgba(2,6,14,.80),rgba(2,6,14,.40) 43%,rgba(2,6,14,.10) 76%,transparent),linear-gradient(180deg,rgba(2,6,14,.02),rgba(2,6,14,.16) 46%,rgba(2,6,14,.80))}.researchFeatureBody{position:relative;z-index:2;min-height:inherit;display:flex;align-items:flex-end;padding:clamp(24px,4.4vw,54px)}.researchFeature:nth-child(even) .researchFeatureBody{justify-content:flex-end}.researchFeatureRead{width:min(900px,100%);display:grid;gap:16px;text-shadow:0 3px 24px rgba(0,0,0,.62)}.researchFeatureRead h3{margin:0;color:var(--researchAccent,#dce7f7);font-size:clamp(2.5rem,6.4vw,5.5rem);line-height:.9;letter-spacing:-.05em}.researchFeaturePlace{color:#d7e2f1;font-size:.75rem;letter-spacing:.15em;text-transform:uppercase}.researchFeatureSynthesis{margin:0;color:#f5f8ff;font-size:clamp(1.04rem,1.7vw,1.32rem);line-height:1.52;max-width:780px}.researchEvidenceColumn{display:grid;gap:12px;margin-top:2px}.researchEvidenceNote{border-left:1px solid rgba(157,231,215,.30);padding:2px 0 2px 14px;color:#dce7f7;line-height:1.55;background:linear-gradient(90deg,rgba(5,9,20,.22),transparent)}.researchEvidenceNote b{display:block;color:#f1f6ff;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px}.researchThread{border-left-color:rgba(255,214,149,.42)}.researchPull{margin:2px 0 0;padding:0 0 0 18px;border-left:2px solid rgba(255,255,255,.26);color:#eef4ff;font-size:clamp(1rem,1.35vw,1.18rem);line-height:1.46;font-style:italic}.researchFeatureMeta{display:flex;gap:16px;flex-wrap:wrap;color:rgba(220,231,247,.74);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase}.researchFeatureMeta span:before{content:"";display:inline-block;width:5px;height:5px;border-radius:50%;background:rgba(157,231,215,.45);margin-right:7px;vertical-align:middle}.researchQuietPanel{max-width:1040px;border:1px solid rgba(132,174,252,.12);border-radius:26px;background:linear-gradient(180deg,rgba(11,18,32,.72),rgba(5,9,20,.82));padding:22px}.researchQuietPanel p{color:#cbd7e8;line-height:1.58}.researchContactList{display:grid;gap:10px;margin-top:14px}.researchContact{border-left:1px solid rgba(132,174,252,.22);padding-left:12px;color:#dce7f7;line-height:1.45}.researchContact small{display:block;color:rgba(220,231,247,.52);font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:3px}@media(max-width:760px){.researchFeature{min-height:880px;border-radius:26px}.researchFeature:before,.researchFeature:nth-child(even):before{background:linear-gradient(180deg,rgba(2,6,14,.06),rgba(2,6,14,.42) 28%,rgba(2,6,14,.95))}.researchFeatureBody,.researchFeature:nth-child(even) .researchFeatureBody{justify-content:flex-start;align-items:flex-end;padding:20px}.researchFeatureRead h3{font-size:clamp(2.4rem,15vw,4rem)}}';
+  if(document.getElementById('focusedResearchStylesV4'))return;
+  let style=document.createElement('style');style.id='focusedResearchStylesV4';
+  style.textContent='.researchArchive.focused{display:grid;gap:clamp(24px,5vw,64px)}.researchFeatureStack{display:grid;gap:clamp(48px,8vw,98px)}.researchFeature{position:relative;min-height:clamp(860px,98vh,1120px);border:1px solid rgba(255,255,255,.12);border-radius:34px;overflow:hidden;background:#080d17;box-shadow:0 30px 100px rgba(0,0,0,.38)}.researchFeature img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.82;filter:saturate(.86) contrast(1.05)}.researchFeature:before{content:"";position:absolute;inset:0;z-index:1;background:radial-gradient(circle at 25% 70%,rgba(2,6,14,.9),rgba(2,6,14,.58) 36%,rgba(2,6,14,.18) 68%,transparent),linear-gradient(90deg,rgba(2,6,14,.82),rgba(2,6,14,.40) 43%,rgba(2,6,14,.10) 76%,transparent),linear-gradient(180deg,rgba(2,6,14,.02),rgba(2,6,14,.16) 46%,rgba(2,6,14,.82))}.researchFeature:nth-child(even):before{background:radial-gradient(circle at 76% 72%,rgba(2,6,14,.9),rgba(2,6,14,.58) 36%,rgba(2,6,14,.18) 68%,transparent),linear-gradient(270deg,rgba(2,6,14,.82),rgba(2,6,14,.40) 43%,rgba(2,6,14,.10) 76%,transparent),linear-gradient(180deg,rgba(2,6,14,.02),rgba(2,6,14,.16) 46%,rgba(2,6,14,.82))}.researchFeatureBody{position:relative;z-index:2;min-height:inherit;display:flex;align-items:flex-end;padding:clamp(24px,4.4vw,54px)}.researchFeature:nth-child(even) .researchFeatureBody{justify-content:flex-end}.researchFeatureRead{width:min(920px,100%);display:grid;gap:16px;text-shadow:0 3px 24px rgba(0,0,0,.62)}.researchIdentity{display:grid;gap:8px;justify-items:start}.researchFeatureRead h3{margin:0;color:var(--researchAccent,#dce7f7);font-size:clamp(2.5rem,6.4vw,5.5rem);line-height:.9;letter-spacing:-.05em}.researchFeaturePlace{display:block;margin:0;color:#d7e2f1;font-size:.75rem;letter-spacing:.15em;text-transform:uppercase}.researchFeatureSynthesis{margin:0;color:#f5f8ff;font-size:clamp(1.04rem,1.7vw,1.32rem);line-height:1.52;max-width:780px}.researchEvidenceColumn{display:grid;gap:12px;margin-top:2px}.researchEvidenceNote{border-left:1px solid rgba(157,231,215,.30);padding:2px 0 2px 14px;color:#dce7f7;line-height:1.55;background:linear-gradient(90deg,rgba(5,9,20,.22),transparent)}.researchEvidenceNote b,.researchRelational b{display:block;color:#f1f6ff;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px}.researchThread{border-left-color:rgba(255,214,149,.42)}.researchRelational{border-left:1px solid rgba(132,174,252,.28);padding:3px 0 2px 14px;color:#dce7f7;line-height:1.45;background:linear-gradient(90deg,rgba(8,12,26,.24),transparent)}.researchRelational ul{list-style:none;margin:0;padding:0;display:grid;gap:5px}.researchRelational li{color:rgba(231,238,250,.84)}.researchRelational strong{color:#f6f8ff;font-weight:600}.researchEpistemic{display:inline-block;margin:0 8px 0 0;color:rgba(157,231,215,.78);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase}.researchExpandable{display:grid;gap:8px;margin-top:2px}.researchExpandable details{border-top:1px solid rgba(255,255,255,.10);padding-top:10px}.researchExpandable summary{cursor:pointer;list-style:none;color:#eef4ff;font-size:.72rem;letter-spacing:.13em;text-transform:uppercase}.researchExpandable summary::-webkit-details-marker{display:none}.researchExpandable summary:before{content:"+";display:inline-block;width:18px;color:rgba(157,231,215,.7)}.researchExpandable details[open] summary:before{content:"-"}.researchExpandItems{display:grid;gap:8px;margin:10px 0 2px 18px;color:#dce7f7;line-height:1.48}.researchExpandItem{max-width:760px;color:rgba(231,238,250,.84)}.researchPull{margin:2px 0 0;padding:0 0 0 18px;border-left:2px solid rgba(255,255,255,.26);color:#eef4ff;font-size:clamp(1rem,1.35vw,1.18rem);line-height:1.46;font-style:italic}.researchFeatureMeta{display:flex;gap:16px;flex-wrap:wrap;color:rgba(220,231,247,.74);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase}.researchFeatureMeta span:before{content:"";display:inline-block;width:5px;height:5px;border-radius:50%;background:rgba(157,231,215,.45);margin-right:7px;vertical-align:middle}@media(max-width:760px){.researchFeature{min-height:900px;border-radius:26px}.researchFeature:before,.researchFeature:nth-child(even):before{background:linear-gradient(180deg,rgba(2,6,14,.06),rgba(2,6,14,.42) 28%,rgba(2,6,14,.96))}.researchFeatureBody,.researchFeature:nth-child(even) .researchFeatureBody{justify-content:flex-start;align-items:flex-end;padding:20px}.researchFeatureRead h3{font-size:clamp(2.35rem,14vw,4rem)}}';
   document.head.appendChild(style);
 }
 function researchCopy(text){return typeof programDossierCopy==='function'?programDossierCopy(text):String(text||'')}
 function researchSynthesis(s){
   return researchText(s.scores?.mentorship?.notes||s.scores?.documentary?.notes||s.alumni_current_student_outcomes?.outcome_pattern||s.identity_preservation_analysis?.summary)||'The institutional reading remains open, with evidence still accumulating across mentorship, documentary culture, and lived sustainability.';
 }
-function researchTraceItems(s,key,limit){return researchUnique(s.source_trace?.[key]||[],limit)}
+function researchTraceItems(s,key,limit){return researchUnique(s.source_trace?.[key]||[],limit).map(text=>({type:key,text}))}
 function researchOpenThreads(s){
   let items=[];
-  researchUnique(s.contradictions||[],2).forEach(x=>items.push(['Interpretive tension',x,'researchThread']));
-  researchTraceItems(s,'unresolved',2).forEach(x=>items.push(['Open question',x,'researchThread']));
-  if(!items.length)items.push(['Open question','The central remaining uncertainty is how the documented institutional structure translates into daily creative life.','researchThread']);
+  researchUnique(s.contradictions||[],2).forEach(text=>items.push({label:'Interpretive tension',type:'contradictory',text,className:'researchThread'}));
+  researchTraceItems(s,'unresolved',2).forEach(x=>items.push({label:'Open question',type:'unresolved',text:x.text,className:'researchThread'}));
+  if(!items.length)items.push({label:'Open question',type:'unresolved',text:'The central remaining uncertainty is how the documented institutional structure translates into daily creative life.',className:'researchThread'});
   return items.slice(0,3);
 }
 function researchEvidenceCandidates(s){
   let li=s.location_intelligence||{},scores=s.scores||{},failure=s.failure_modes||{};
   let groups=[
-    ['Mentorship dynamics',[scores.mentorship?.notes,scores.teaching?.notes,researchTraceItems(s,'verified',2)]],
-    ['Documentary method',[scores.documentary?.notes,s.documentary_ecosystem,scores.philosophy?.notes]],
-    ['Curricular pressure',[scores.curriculum?.notes,scores.politics?.notes,scores.competitiveness?.notes]],
-    ['Sustainability / labor ecology',[scores.funding?.notes,failure.financial_stress?.notes,failure.low_energy_period?.notes]],
-    ['Environmental implication',[s.ordinary_tuesday,li.energy_profile,li.city,li.state,scores.livability?.notes]],
-    ['Trajectory signal',[s.alumni_current_student_outcomes?.outcome_pattern,s.identity_preservation_analysis?.summary,researchTraceItems(s,'inferred',2)]],
-    ['Confidence limitation',[researchTraceItems(s,'speculative',2),researchTraceItems(s,'unresolved',2),s.relationship_tracker]]
+    ['Mentorship dynamics','inferred',[scores.mentorship?.notes,scores.teaching?.notes,researchTraceItems(s,'verified',2).map(x=>x.text)]],
+    ['Documentary method','inferred',[scores.documentary?.notes,s.documentary_ecosystem,scores.philosophy?.notes]],
+    ['Curricular pressure','inferred',[scores.curriculum?.notes,scores.politics?.notes,scores.competitiveness?.notes]],
+    ['Sustainability / labor ecology','inferred',[scores.funding?.notes,failure.financial_stress?.notes,failure.low_energy_period?.notes]],
+    ['Environmental implication','inferred',[s.ordinary_tuesday,li.energy_profile,li.city,li.state,scores.livability?.notes]],
+    ['Trajectory signal','inferred',[s.alumni_current_student_outcomes?.outcome_pattern,s.identity_preservation_analysis?.summary,researchTraceItems(s,'inferred',2).map(x=>x.text)]],
+    ['Confidence limitation','unresolved',[researchTraceItems(s,'speculative',2).map(x=>x.text),researchTraceItems(s,'unresolved',2).map(x=>x.text)]]
   ];
-  return groups.map(([label,values])=>({label,text:researchUnique(values.flat?values.flat(3):values,1)[0]})).filter(x=>x.text);
+  return groups.map(([label,type,values])=>({label,type,text:researchUnique(values.flat?values.flat(3):values,1)[0]})).filter(x=>x.text);
 }
 function researchDedupeBlocks(items,limit=5){
   let seen=new Set(),out=[];
   items.forEach(item=>{
-    let label=Array.isArray(item)?item[0]:item.label;
-    let text=researchText(Array.isArray(item)?item[1]:item.text);
-    let className=Array.isArray(item)?item[2]:item.className;
+    let label=item.label,type=item.type||'inferred',className=item.className;
+    let text=researchText(item.text);
     let key=text.toLowerCase();
-    if(label&&text&&key&&!seen.has(key)){seen.add(key);out.push({label,text,className});}
+    if(label&&text&&key&&!seen.has(key)){seen.add(key);out.push({label,type,text,className});}
   });
   return out.slice(0,limit);
 }
+function researchRelationSignals(s,limit=4){
+  return (s.relationship_tracker||[]).map(x=>{
+    let person=researchText(x.person)||researchText(x.role)||'Institutional contact';
+    let tone=researchText(x.tone),residue=researchText(x.residue),role=researchText(x.role);
+    let text=[tone,residue].filter(Boolean).join(' - ');
+    return {person,role,text:text||role,type:'direct contact'};
+  }).filter(x=>x.person&&x.text).slice(0,limit);
+}
+function researchExpandItem(item){return `<div class="researchExpandItem"><span class="researchEpistemic">${esc(item.type||'inferred')}</span>${esc(researchText(item.text))}</div>`}
+function researchExpandableSection(title,items){
+  let clean=researchDedupeBlocks(items.map(x=>({label:title,type:x.type,text:x.text})),8);
+  if(!clean.length)return '';
+  return `<details><summary>${esc(title)}</summary><div class="researchExpandItems">${clean.map(researchExpandItem).join('')}</div></details>`;
+}
+function researchExpandableSections(s){
+  let scores=s.scores||{},failure=s.failure_modes||{};
+  let sections=[
+    ['Evidence fragments',[...researchTraceItems(s,'verified',3),...researchTraceItems(s,'inferred',3),...researchUnique(s.public_testimony||[],2).map(text=>({type:'anecdotal',text}))]],
+    ['Unresolved questions',[...researchTraceItems(s,'unresolved',4),...researchUnique(s.contradictions||[],3).map(text=>({type:'contradictory',text}))]],
+    ['Curriculum interpretation',[scores.curriculum?.notes,scores.teaching?.notes,scores.philosophy?.notes].map(text=>({type:'inferred',text}))],
+    ['Documentary-world placement',[scores.documentary?.notes,s.documentary_ecosystem].map(text=>({type:'inferred',text}))],
+    ['Environmental / labor implications',[scores.funding?.notes,scores.livability?.notes,failure.financial_stress?.notes,failure.low_energy_period?.notes,s.ordinary_tuesday].map(text=>({type:'inferred',text}))],
+    ['Alumni and trajectory signals',[s.alumni_current_student_outcomes?.outcome_pattern,s.identity_preservation_analysis?.summary].map(text=>({type:'inferred',text}))],
+    ['Relational evidence',researchRelationSignals(s,8).map(x=>({type:'direct contact',text:`${x.person}: ${x.text}`}))]
+  ];
+  return sections.map(([title,items])=>researchExpandableSection(title,items)).join('');
+}
 function researchFeatureCard(s,i){
   let c=s.brand_colors||{},loc=s.location_intelligence||s.location||{},trace=s.source_trace||{},fallback=s.visual_identity?.photo_local||'';
-  let evidence=researchDedupeBlocks(researchEvidenceCandidates(s),5);
-  let threads=researchDedupeBlocks(researchOpenThreads(s),3);
+  let evidence=researchDedupeBlocks(researchEvidenceCandidates(s),4);
+  let threads=researchDedupeBlocks(researchOpenThreads(s),2);
+  let relations=researchRelationSignals(s,3);
   let used=new Set([researchText(researchSynthesis(s)).toLowerCase(),...evidence.map(x=>x.text.toLowerCase()),...threads.map(x=>x.text.toLowerCase())]);
   let test=researchUnique(s.public_testimony||[],2).find(x=>!used.has(x.toLowerCase()))||'';
-  return `<section class="researchFeature" style="--researchAccent:${c.accent||'#dce7f7'}"><img src="${researchImage(s)}" alt="" loading="lazy" onerror="this.onerror=null;this.src='${esc(fallback)}'"><div class="researchFeatureBody"><div class="researchFeatureRead"><div><h3>${esc(s.name)}</h3><div class="researchFeaturePlace">${esc(loc.city||s.location?.city||'')}</div></div><p class="researchFeatureSynthesis">${esc(researchSynthesis(s))}</p><div class="researchEvidenceColumn">${evidence.map(x=>`<div class="researchEvidenceNote"><b>${esc(x.label)}</b>${esc(x.text)}</div>`).join('')}${threads.map(x=>`<div class="researchEvidenceNote ${esc(x.className||'')}"><b>${esc(x.label)}</b>${esc(x.text)}</div>`).join('')}</div>${test?`<blockquote class="researchPull">${esc(test)}</blockquote>`:''}<div class="researchFeatureMeta"><span>${(trace.verified||[]).length} verified traces</span><span>${(trace.inferred||[]).length} inferred reads</span><span>${(trace.unresolved||[]).length} unresolved signals</span></div></div></div></section>`;
+  return `<section class="researchFeature" style="--researchAccent:${c.accent||'#dce7f7'}"><img src="${researchImage(s)}" alt="" loading="lazy" onerror="this.onerror=null;this.src='${esc(fallback)}'"><div class="researchFeatureBody"><div class="researchFeatureRead"><div class="researchIdentity"><h3>${esc(s.name)}</h3><div class="researchFeaturePlace">${esc(loc.city||s.location?.city||'')}</div></div><p class="researchFeatureSynthesis">${esc(researchSynthesis(s))}</p><div class="researchEvidenceColumn">${evidence.map(x=>`<div class="researchEvidenceNote"><b>${esc(x.label)}</b><span class="researchEpistemic">${esc(x.type)}</span>${esc(x.text)}</div>`).join('')}${threads.map(x=>`<div class="researchEvidenceNote ${esc(x.className||'')}"><b>${esc(x.label)}</b><span class="researchEpistemic">${esc(x.type)}</span>${esc(x.text)}</div>`).join('')}${relations.length?`<div class="researchRelational"><b>Relational signals</b><ul>${relations.map(x=>`<li><strong>${esc(x.person)}</strong>${x.text?` - ${esc(x.text)}`:''}</li>`).join('')}</ul></div>`:''}</div>${test?`<blockquote class="researchPull">${esc(test)}</blockquote>`:''}<div class="researchExpandable">${researchExpandableSections(s)}</div><div class="researchFeatureMeta"><span>${(trace.verified||[]).length} verified traces</span><span>${(trace.inferred||[]).length} inferred reads</span><span>${(trace.unresolved||[]).length} unresolved signals</span></div></div></div></section>`;
 }
 function evidenceView(){
   focusedResearchStyles();
-  let contacts=DATA.schools.flatMap(s=>(s.relationship_tracker||[]).map(x=>({school:s.name,person:researchText(x.person),role:researchText(x.role),tone:researchText(x.tone),residue:researchText(x.residue)}))).slice(0,10);
-  return `<div class="researchArchive focused"><div class="researchFeatureStack">${ranked().map(researchFeatureCard).join('')}</div><section class="researchQuietPanel"><h3>Relationship traces</h3><p>Field contacts and institutional conversations remain as human signals: partial, situated, and useful because they show how the institution behaves in relation, not because they form a complete evidence table.</p><div class="researchContactList">${contacts.map(x=>`<div class="researchContact"><small>${esc(x.school)} / ${esc(x.role||'contact')}</small>${esc([x.person,x.tone,x.residue].filter(Boolean).join(' - '))}</div>`).join('')}</div></section></div>`;
+  return `<div class="researchArchive focused"><div class="researchFeatureStack">${ranked().map(researchFeatureCard).join('')}</div></div>`;
 }
